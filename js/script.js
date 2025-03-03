@@ -1,50 +1,78 @@
-let opcion;
-const listadeProductos = [];
-const listadePrecios = [];
+const título = document.getElementById("título");
+título.innerText = "Tienda online Mi Atelier 3D";
 
-function verProductos() {
-    if (listadeProductos.length === 0) {
-        alert("No hay productos disponibles.");
-    } else {
-        alert("Estos son los productos disponibles:");
-        alert(listadeProductos.join("/n"));
-    };
+let productos = JSON.parse(localStorage.getItem("productos")) || [];
+
+const agregarProducto = (producto) => {
+    productos.push(producto);
+    localStorage.setItem("productos", JSON.stringify(productos));
+    container.innerHTML = "";
+    mostrarProductos();
 };
-function verListadePrecios() {
-    if (listadePrecios.length <= 1) {
-        alert("No hay productos disponibles por lo que el listado de precios no se puede proporcionar.");
 
-    } else {
-        alert("Esta es la lista de precios de nuestra tienda");
-        alert(listadePrecios.join("/n"));
-    }
-}
-function efectuarPago() {
-    let confirmacion = confirm("¿Deseas confirmar el pago?");
-    if (confirmacion) {
-        alert("¡Pago realizado con éxito!");
-      } else {
-        alert("Pago cancelado.");
-}
-}
-do {
-    opcion = parseInt(prompt("Bienvenido a nuestra tienda\n\n1. Para ver los productos.\n2. Para ver lista de precios.\n3. Para realizar una compra.\n\n Para salir ingrese 0"))
-    switch (opcion) {
-        case 0:
-            alert("Gracias por visitar nuestra tienda.");
-            break;
-        case 1:
-            verProductos();
-            break;
-        case 2:
-            verListadePrecios();
-            break;
-        case 3:
-            efectuarPago();
-            break;
-        default:
-            alert("Opción inválida.")
-            break;
+const eliminarProducto = (nombre) => {
+    productos = productos.filter(el => el.producto !== nombre);
+    localStorage.setItem("productos", JSON.stringify(productos));
+    mostrarProductos();
+};
+
+const miFormulario = document.getElementById("formulario");
+miFormulario.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const producto = e.target[0].value;
+    const precio = e.target[1].value;
+
+    const nuevoProducto = {
+        producto,
+        precio
     };
-} while (opcion !== 0);
 
+    console.log("Este es el nuevo producto: ", nuevoProducto);
+
+    agregarProducto(nuevoProducto);
+
+    e.target[0].value = "";
+    e.target[1].value = "";
+});
+const crearCard = (producto) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const nombreProducto = document.createElement("p");
+    nombreProducto.innerText = producto.producto;
+
+    const precio = document.createElement("p");
+    precio.innerText = `${producto.precio}`;
+
+    const eliminarProductoBtn = document.createElement("button");
+    eliminarProductoBtn.innerText = "Eliminar producto";
+    eliminarProductoBtn.addEventListener("click", () => eliminarProducto(producto.producto));
+
+    card.appendChild(nombreProducto);
+    card.appendChild(precio);
+    card.appendChild(eliminarProductoBtn);
+
+    container.appendChild(card);
+};
+
+
+const mostrarProductos = () => {
+
+    container.innerHTML = "";
+
+    if (productos.length > 0) {
+        productos.forEach(element => {
+            crearCard(element);
+        });
+    } else {
+        const mensajeNoProductos = document.createElement("p");
+        mensajeNoProductos.innerText = "No hay productos disponibles.";
+        container.appendChild(mensajeNoProductos);
+    }
+};
+
+
+const container = document.getElementById("productos-container");
+
+
+mostrarProductos();

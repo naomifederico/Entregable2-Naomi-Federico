@@ -1,0 +1,20 @@
+.título-general{
+    background: #e8833a;
+    text-align: center;
+}
+
+.formulario-productos{
+    list-style: none;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: 10px 15px;
+  background-image: linear-gradient(to right, #efef95, #e8833a);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cards-productos{
+    background-color: beige;
+}
+    

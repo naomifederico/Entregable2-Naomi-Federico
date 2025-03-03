@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-   <script src="./js/script.js"></script>
+    <title>MiAtelier3D</title>
+    <link rel="shortcut icon" href="img/logo.img.jpeg" type="img/logo.img.jpeg" />
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
+
 <body>
-    <h1>
-        Bienvenido a nuestra tienda.
+    <h1 class="título-general" id="título">
+        Tienda online.
     </h1>
+    <form id="formulario" class="formulario-productos">
+        <input type="text" id="producto" placeholder="Ingrese su producto">
+        <input type="text" id="precio" placeholder="Ingrese el precio del producto">
+        <input type="submit" value="Agregar">
+
+    </form>
+    <div id="productos-container" class="cards-productos"></div>
+  <script src="js/script.js"></script>
 </body>
+
 </html>
